@@ -26,7 +26,12 @@ public class Socket {
 	}
 	
 	public static void send(String msg) {
-		byte[] data = (Config.HEADER + Config.SEPARATOR + msg).getBytes();
+		byte[] data = null;
+		if(Config.HEADER_REQUIRED)
+			data = (Config.HEADER + Config.SEPARATOR + msg).getBytes();
+		else
+			data = msg.getBytes();
+		
 		try {
 			socket.send(new DatagramPacket(data, data.length, Config.HOST, Config.PORT));
 		} catch (IOException e) {
